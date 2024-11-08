@@ -1,101 +1,129 @@
-import Image from "next/image";
+'use client'; // Para habilitar el uso de hooks (si los necesitaras, como para Firebase)
 
-export default function Home() {
+/* React y otros imports */
+import React, { useEffect } from 'react';
+import { auth } from '../firebase'; // Si estás usando Firebase
+
+// Importar el CSS global
+import 'globals.css';
+
+const HomePage = () => {
+
+  useEffect(() => {
+    // Aquí va la lógica para cargar el estado de Firebase, por ejemplo:
+    // Verificar si el usuario está autenticado, cargar los viajes, etc.
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="body-main">
+      <header className="site-header bg-gray-800 text-white fixed top-0 left-0 w-full z-10">
+        <div className="wrapper site-header__wrapper flex justify-between items-center w-full p-2">
+          
+          {/* Botón de hamburguesa */}
+          <div className="nav-left">
+            <button className="hamburger text-xl text-white bg-transparent border-none cursor-pointer" id="openSidebar" aria-label="Abrir barra lateral" type="button">
+              <i className="fas fa-bars"></i>
+            </button>
+          </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          {/* Navegación principal (centrada) */}
+          <nav className="nav nav-center flex justify-center flex-1">
+            <ul className="flex space-x-5">
+              <li><a href="/" className="text-white text-lg">Home</a></li>
+              <li><a href="#" id="favoritesLink" className="text-white text-lg">Favorites</a></li>
+            </ul>
+          </nav>
+
+          {/* Imagen de "Sign In" */}
+          <div className="auth-container flex items-center justify-end">
+            <img id="loginIcon" src="img/sign_in.png" alt="Login" className="login-icon w-10 h-10 cursor-pointer" />
+            <div id="dropdownMenu" className="dropdown hidden absolute mt-40 right-5 bg-blue-600 text-white p-3 rounded-lg">
+              <p id="userNameDropdown" className="mb-2 text-left">Nombre Usuario</p>
+              <button id="logoutBtn" className="text-white p-0 w-full text-left hover:bg-transparent focus:outline-none">
+                <i className="fas fa-sign-out-alt"></i> Sign out
+              </button>
+              <button id="deleteUserBtn" className="delete-account-btn text-white w-full text-left hover:bg-transparent focus:outline-none">
+                <i className="fas fa-user-times"></i> Delete account
+              </button>
+            </div>
+          </div>
         </div>
+      </header>
+
+      {/* Barra lateral izquierda con todos los viajes */}
+      <div id="sidebar" className="sidebar">
+        <button className="hamburger text-xl text-white bg-transparent border-none cursor-pointer" id="sidebarHamburger" aria-label="Abrir barra lateral" type="button">
+          <i className="fas fa-bars"></i>
+        </button>
+        <button id="closeSidebar" className="close-btn text-3xl text-white absolute top-5 right-5" type="button">&times;</button>
+        <ul>
+          {/* Aquí iría contenido dinámico como una lista de viajes */}
+        </ul>
+      </div>
+
+      {/* Contenido Principal */}
+      <main className="main">
+        <section className="main_trips"></section>
+        <div className="favorites-container"></div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="footer-main bg-gray-800 text-white p-4 text-center">
+        <p>© 2024 Blog de Viajes</p>
       </footer>
+
+      {/* Modal personalizado de bienvenida */}
+      <div id="welcomeModal" className="modal">
+        <div className="modal-content">
+          <span className="close-modal">&times;</span>
+          <h2>Bienvenido, <span id="userName"></span>!</h2>
+          <p>Estamos felices de tenerte de vuelta.</p>
+        </div>
+      </div>
+
+      {/* Modal para Login */}
+      <div id="authModal" className="modal">
+        <div className="modal-content">
+          <span className="close-modal">&times;</span>
+          <h2>Login</h2>
+          <div id="login-banner" className="banner-message">
+            <p>Want to use favorites functionality? Sign in down here!</p>
+          </div>
+          <div className="input-icon">
+            <i className="fa fa-envelope"></i>
+            <input type="email" id="email" placeholder="Email ID" required />
+          </div>
+          <div className="input-icon">
+            <i className="fa fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" required />
+          </div>
+          <div className="checkbox-container remember-checkbox">
+            <label><input type="checkbox" /> Remember me</label>
+            <a href="#" id="forgot-password" className="forgot-password">Forgot Password?</a>
+          </div>
+          <button id="signInBtn" className="bg-blue-500 text-white py-2 px-4 rounded">Sign In</button>
+          <p className="signup-link">Not registered? <a href="#" id="signUpBtn">Sign Up!</a></p>
+        </div>
+      </div>
+
+      {/* Modal para Sign Up */}
+      <div id="signUpModal" className="modal">
+        <div className="modal-content">
+          <span className="close-modal">&times;</span>
+          <h2>Sign Up</h2>
+          <div className="input-icon">
+            <i className="fa fa-envelope"></i>
+            <input type="email" id="newEmail" placeholder="New Email ID" required />
+          </div>
+          <div className="input-icon">
+            <i className="fa fa-lock"></i>
+            <input type="password" id="newPassword" placeholder="New Password" required />
+          </div>
+          <button id="registerBtn" className="bg-blue-500 text-white py-2 px-4 rounded">Register</button>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default HomePage;

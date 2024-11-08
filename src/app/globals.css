@@ -1,7 +1,11 @@
+/* globals.css */
+
+/* Integrando Tailwind */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Estilos Globales */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -15,7 +19,17 @@
 }
 
 body {
+  background-image: url('img/backgrounds/white_wood_background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: Arial, sans-serif;
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto; /* Evita el scroll del body, delegándolo al main fixed */
 }
